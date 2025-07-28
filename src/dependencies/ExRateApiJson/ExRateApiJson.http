@@ -1,0 +1,6 @@
+@ExRateApiJson_HostAddress = http://localhost:5243
+
+POST {{ExRateApiJson_HostAddress}}/exchange/
+Accept: application/json
+
+###
