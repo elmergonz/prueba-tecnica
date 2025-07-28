@@ -30,11 +30,11 @@ public class ExchangeController : ControllerBase
         string jsonData = System.IO.File.ReadAllText(dataFilePath);
         ExchangeRate? rateData = JsonSerializer.Deserialize<ExchangeRate>(jsonData, options);
 
-        decimal rate = request.Amount * (1 / rateData.rates[request.FromCurrency]) * rateData.rates[request.ToCurrency];
+        decimal convertion = request.Amount * (1 / rateData.rates[request.FromCurrency]) * rateData.rates[request.ToCurrency];
 
         return Ok(new ExchangeRateResponse
         {
-            Result = Math.Round(rate, 2)
+            Result = Math.Round(convertion, 2)
         });
     }
 }
