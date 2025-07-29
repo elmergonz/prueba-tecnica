@@ -1,7 +1,13 @@
-@ExRateApiXml_HostAddress = http://localhost:5085
+@ExRateApiXml_HostAddress = http://localhost:28539
 
-POST {{ExRateApiXml_HostAddress}}/exchange/
+POST {{ExRateApiXml_HostAddress}}/api/exchange/
 Content-Type: application/xml
 Accept: application/xml
+
+<ExchangeRateRequest>
+  <FromCurrency>USD</FromCurrency>
+  <ToCurrency>EUR</ToCurrency>
+  <Amount>100</Amount>
+</ExchangeRateRequest>
 
 ###

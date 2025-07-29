@@ -1,4 +1,4 @@
-@ExRateApiFancyJson_HostAddress = http://localhost:5025
+@ExRateApiFancyJson_HostAddress = http://localhost:28540
 
 POST {{ExRateApiFancyJson_HostAddress}}/exchange/
 Accept: application/json
