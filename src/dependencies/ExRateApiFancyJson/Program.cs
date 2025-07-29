@@ -29,9 +29,9 @@ app.MapPost("/exchange", (ExchangeRateRequest req) =>
     string jsonData = File.ReadAllText(dataFilePath);
     ExchangeRate? rateData = JsonSerializer.Deserialize<ExchangeRate>(jsonData, options);
 
-    decimal convertion = req.quantity * (1 / rateData.rates[req.sourceCurrency]) * rateData.rates[req.targetCurrency];
+    decimal conversion = req.quantity * (1 / rateData.rates[req.sourceCurrency]) * rateData.rates[req.targetCurrency];
 
-    return Results.Ok(new ExchangeRateResponse(200, "Ok", new Data(Math.Round(convertion, 2))));
+    return Results.Ok(new ExchangeRateResponse(200, "Ok", new Data(Math.Round(conversion, 2))));
 })
 .WithName("PostExchange")
 .WithOpenApi();
