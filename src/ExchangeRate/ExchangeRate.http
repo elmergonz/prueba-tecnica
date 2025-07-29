@@ -1,0 +1,12 @@
+@ExRate_HostAddress = http://localhost:28541
+
+POST {{ExRate_HostAddress}}/api/exchange
+Content-Type: application/json
+Accept: application/json
+{
+  "fromCurrency": "USD",
+  "toCurrency": "DOP",
+  "amount": 123
+}
+
+###
