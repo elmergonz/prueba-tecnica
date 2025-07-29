@@ -13,8 +13,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapPost("/exchange", (ExchangeRateRequest req) =>
+app.MapPost("api/exchange", (ExchangeRateRequest req) =>
 {
+    var random = new Random();
+    decimal randomSpread = (decimal) random.NextDouble();
+
     string dataFilePath = "./data/rates.json";
     var options = new JsonSerializerOptions
     {
@@ -23,13 +26,13 @@ app.MapPost("/exchange", (ExchangeRateRequest req) =>
 
     if (!File.Exists(dataFilePath))
     {
-        return Results.NotFound(new ExchangeRateResponse(404, "Not Found", new Data(null)));
+        return Results.NotFound(new ExchangeRateResponse(404, "Not Found", new Data(0)));
     }
 
     string jsonData = File.ReadAllText(dataFilePath);
     ExchangeRate? rateData = JsonSerializer.Deserialize<ExchangeRate>(jsonData, options);
 
-    decimal conversion = req.quantity * (1 / rateData.rates[req.sourceCurrency]) * rateData.rates[req.targetCurrency];
+    decimal conversion = req.quantity * (1 / rateData.rates[req.sourceCurrency]) * (rateData.rates[req.targetCurrency] - randomSpread);
 
     return Results.Ok(new ExchangeRateResponse(200, "Ok", new Data(Math.Round(conversion, 2))));
 })
@@ -51,4 +54,4 @@ record ExchangeRate(
     Dictionary<string, decimal> rates
 );
 
-record Data(decimal? total);
+record Data(decimal total);

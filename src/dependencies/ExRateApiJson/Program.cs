@@ -13,8 +13,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapPost("/exchange", (ExchangeRateRequest req) =>
+app.MapPost("api/exchange", (ExchangeRateRequest req) =>
 {
+    var random = new Random();
+    decimal randomSpread = (decimal) random.NextDouble();
+
     string dataFilePath = "./data/rates.json";
     var options = new JsonSerializerOptions
     {
@@ -29,7 +32,7 @@ app.MapPost("/exchange", (ExchangeRateRequest req) =>
     string jsonData = File.ReadAllText(dataFilePath);
     ExchangeRate? rateData = JsonSerializer.Deserialize<ExchangeRate>(jsonData, options);
 
-    decimal conversion = req.value * (1 / rateData.rates[req.from]) * rateData.rates[req.to];
+    decimal conversion = req.value * (1 / rateData.rates[req.from]) * (rateData.rates[req.to] - randomSpread);
 
     return Results.Ok(new ExchangeRateResponse(Math.Round(conversion, 2)));
 })

@@ -5,7 +5,7 @@ using XmlApiDemo.Models;
 namespace XmlApiDemo.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/exchange")]
 [Produces("application/xml")]
 public class ExchangeController : ControllerBase
 {
@@ -13,6 +13,9 @@ public class ExchangeController : ControllerBase
     [Consumes("application/xml")]
     public ActionResult<ExchangeRateResponse> Post([FromBody] ExchangeRateRequest request)
     {
+        var random = new Random();
+        decimal randomSpread = (decimal)random.NextDouble();
+
         string dataFilePath = "./data/rates.json";
         var options = new JsonSerializerOptions
         {
@@ -30,7 +33,7 @@ public class ExchangeController : ControllerBase
         string jsonData = System.IO.File.ReadAllText(dataFilePath);
         ExchangeRate? rateData = JsonSerializer.Deserialize<ExchangeRate>(jsonData, options);
 
-        decimal conversion = request.Amount * (1 / rateData.rates[request.FromCurrency]) * rateData.rates[request.ToCurrency];
+        decimal conversion = request.Amount * (1 / rateData.rates[request.FromCurrency]) * (rateData.rates[request.ToCurrency] - randomSpread);
 
         return Ok(new ExchangeRateResponse
         {
