@@ -1,6 +1,0 @@
-@ExRate.API_HostAddress = http://localhost:5201
-
-GET {{ExRate.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

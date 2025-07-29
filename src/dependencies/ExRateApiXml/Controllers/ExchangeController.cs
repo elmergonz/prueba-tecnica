@@ -5,7 +5,7 @@ using XmlApiDemo.Models;
 namespace XmlApiDemo.Controllers;
 
 [ApiController]
-[Route("exchange")]
+[Route("[controller]")]
 [Produces("application/xml")]
 public class ExchangeController : ControllerBase
 {
