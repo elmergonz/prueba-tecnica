@@ -15,7 +15,7 @@ public class ExRateApiFancyJsonProvider : IExchangeRateProvider
 
     public async Task<ExchangeRateResponse?> GetExchangeRateAsync(ExchangeRateRequest request)
     {
-        var url = $"http://localhost:28540/api/exchange";
+        var url = $"http://host.docker.internal:28540/api/exchange";
         var payload = new
         {
             sourceCurrency = request.FromCurrency,
