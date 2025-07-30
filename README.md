@@ -13,3 +13,10 @@ dotnet run src/ExchangeRate/ExchangeRate.csproj
 ```
 
 La aplicacion se estara ejecutando en el puerto `28541` del localjost y para acceder al swagger solo tendrian que seguir esta url: http://localhost:28541/swagger
+
+## Ejecucion por Docker
+
+Para ejecutar el projecto y sus dependencias, pueden usar Docker para crear una imagen y ejecutarlo en su ambiente local. Solo deben ejecutar este comando:
+```shell
+docker-compose up --build
+```

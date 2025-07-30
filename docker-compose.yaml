@@ -1,0 +1,42 @@
+services:
+  # dependencies
+  exratejson:
+    image: exrateapijson:latest
+    build:
+      context: ./src/dependencies/ExRateApiJson
+      dockerfile: Dockerfile
+    ports:
+      - "28538:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  exratexml:
+    image: exrateapixml:latest
+    build:
+      context: ./src/dependencies/ExRateApiXml
+      dockerfile: Dockerfile
+    ports:
+      - "28539:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  exratefancyjson:
+    image: exrateapifancyjson:latest
+    build:
+      context: ./src/dependencies/ExRateApiFancyJson
+      dockerfile: Dockerfile
+    ports:
+      - "28540:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  # main project
+  exchangerateapi:
+    image: exchangerateapi:latest
+    build:
+      context: ./src/ExchangeRate
+      dockerfile: Dockerfile
+    ports:
+      - "28541:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
