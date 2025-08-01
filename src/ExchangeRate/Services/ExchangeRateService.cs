@@ -12,21 +12,7 @@ public class ExchangeRateService : IExchangeRateService
 
     public async Task<ExchangeRateResponse> GetBestDealAsync(ExchangeRateRequest request)
     {
-        var offers = new List<ExchangeRateResponse>();
-
-        foreach (var provider in _providers)
-        {
-            try
-            {
-                var offer = await provider.GetExchangeRateAsync(request);
-                if (offer != null)
-                    offers.Add(offer);
-            }
-            catch
-            {
-                continue;
-            }
-        }
+        var offers = await Task.WhenAll(_providers.Select(p => p.GetExchangeRateAsync(request)));
 
         var best = offers.OrderByDescending(o => o.Amount).FirstOrDefault();
 
